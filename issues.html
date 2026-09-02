@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     .issues-page {
-      max-width: 860px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 60px 32px 80px;
     }
@@ -40,7 +40,7 @@
     .issue-section {
       border-left: 4px solid var(--blue);
       padding: 32px 36px;
-      margin-bottom: 32px;
+      margin-bottom: 0;
       background: var(--light-bg);
       border-radius: 0 8px 8px 0;
     }
@@ -125,6 +125,15 @@
       height: 16px;
     }
 
+    .section-img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+
     /* Stamp graphic */
     .stamp-graphic {
       position: relative;
@@ -193,6 +202,12 @@
       line-height: 1;
     }
 
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
     @media (max-width: 768px) {
       .issues-page {
         padding: 32px 20px 60px;
@@ -212,6 +227,10 @@
 
       .issue-section-body {
         font-size: 0.9rem;
+      }
+
+      .sections-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -236,6 +255,8 @@
 
     <h1 class="issues-page-title">The Issues <span>That Matter</span></h1>
     <p class="issues-page-subtitle">22 years in office. Here is the documented record of failure Ward 7 has been forced to endure.</p>
+
+    <div class="sections-grid">
 
     <!-- Section 1 -->
     <div class="issue-section">
@@ -266,6 +287,7 @@
 
     <!-- Section 2 -->
     <div class="issue-section">
+      <img src="images/standby.png" alt="Standing By While Community Hubs Disappear" class="section-img" />
       <h2 class="issue-section-headline">Standing By While Community Hubs Disappear</h2>
       <div class="issue-section-body">
         <p>Our youth need mentorship, jobs, and safe recreational spaces. Yet, under Perruzza's watch, we lost the proposed Ghanaian Canadian Association of Ontario (GCAO) community hub. The association submitted their business plan directly to Perruzza's office, but when the city abruptly reassigned the building, he claimed he was completely "unaware" of the city's plans.</p>
@@ -275,6 +297,7 @@
 
     <!-- Section 3 -->
     <div class="issue-section">
+      <img src="images/mismatced.png" alt="Mismanaged Millions and Padlocked Parks" class="section-img" />
       <h2 class="issue-section-headline">Mismanaged Millions and Padlocked Parks</h2>
       <div class="issue-section-body">
         <p>Taxpayer dollars are consistently wasted through sheer administrative neglect. The city spent $860,000 on a property for the Red Oak Parkette, but Perruzza's office and city staff failed to realize residential tenants were living inside, stalling the park for years while he claimed to be "appalled" by the delays.</p>
@@ -284,6 +307,7 @@
 
     <!-- Section 4 -->
     <div class="issue-section">
+      <img src="images/out-of-touch.png" alt="Out of Touch and Out of Office" class="section-img" />
       <h2 class="issue-section-headline">Out of Touch and Out of Office</h2>
       <div class="issue-section-body">
         <p>Residents can't get answers, and his default excuse is that he "didn't know." This administrative failure is compounded by ethical breaches. In July 2024, the Integrity Commissioner found that Perruzza violated the Code of Conduct by distributing flyers during an election ban period and utilizing an unauthorized dataset containing approximately 10,000 constituent names for his campaign.</p>
@@ -302,6 +326,8 @@
         <p>Today, he continues to play both sides — using activist rhetoric about the realities of policing while voting against motions that would have reallocated body-camera funding directly into grassroots social development programs.</p>
       </div>
     </div>
+
+    </div><!-- end sections-grid -->
 
   </div>
 
