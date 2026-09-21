@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="News — Perruzza Time To Go"
+  description="News and updates from the Perruzza Time To Go campaign."
+>
+  <nav class="navbar">
+    <a href="/" class="logo" style="text-decoration: none;">
+      DO NOT VOTE <span class="logo-yellow">FOR PERRUZZA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#issues">The Issues</a></li>
+      <li><a href="/#track-record">Track Record</a></li>
+      <li><a href="/blog">News</a></li>
+      <li><a href="/#take-action">Take Action</a></li>
+    </ul>
+    <a href="/#get-involved" class="btn-get-involved">Get Involved</a>
+  </nav>
+
+  <main class="blog-page">
+    <a href="/" class="blog-back">← Back to Home</a>
+    <h1 class="blog-heading">News <span>&amp; Updates</span></h1>
+    <p class="blog-intro">
+      Campaign updates, facts, and calls to action for Ward 7.
+    </p>
+
+    <ul class="blog-list">
+      {
+        posts.map((post) => (
+          <li class="blog-card">
+            <a href={`/blog/${post.id}`}>
+              {post.data.image && (
+                <img
+                  src={post.data.image}
+                  alt=""
+                  class="blog-card-image"
+                />
+              )}
+              <div class="blog-card-body">
+                <time datetime={post.data.date.toISOString()}>
+                  {formatDate(post.data.date)}
+                </time>
+                <h2>{post.data.title}</h2>
+                {post.data.description && <p>{post.data.description}</p>}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  .blog-back {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 32px;
+  }
+
+  .blog-back:hover {
+    color: var(--blue);
+  }
+
+  .blog-heading {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+
+  .blog-heading span {
+    color: var(--blue);
+  }
+
+  .blog-intro {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .blog-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .blog-card a {
+    display: block;
+    background: var(--light-bg);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .blog-card a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 27, 53, 0.1);
+  }
+
+  .blog-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .blog-card-body {
+    padding: 24px 28px;
+  }
+
+  .blog-card time {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .blog-card h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.45rem;
+    color: var(--navy);
+    text-transform: uppercase;
+    margin: 8px 0 10px;
+    line-height: 1.2;
+  }
+
+  .blog-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .blog-page {
+      padding: 32px 20px 60px;
+    }
+
+    .blog-heading {
+      font-size: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title={`${post.data.title} — Perruzza Time To Go`}
+  description={post.data.description || post.data.title}
+>
+  <nav class="navbar">
+    <a href="/" class="logo" style="text-decoration: none;">
+      DO NOT VOTE <span class="logo-yellow">FOR PERRUZZA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#issues">The Issues</a></li>
+      <li><a href="/#track-record">Track Record</a></li>
+      <li><a href="/blog">News</a></li>
+      <li><a href="/#take-action">Take Action</a></li>
+    </ul>
+    <a href="/#get-involved" class="btn-get-involved">Get Involved</a>
+  </nav>
+
+  <article class="post-page">
+    <a href="/blog" class="blog-back">← All News</a>
+    <header class="post-header">
+      <time datetime={post.data.date.toISOString()}>
+        {formatDate(post.data.date)}
+      </time>
+      <h1>{post.data.title}</h1>
+      {post.data.description && <p class="post-desc">{post.data.description}</p>}
+    </header>
+
+    {
+      post.data.image && (
+        <img src={post.data.image} alt="" class="post-cover" />
+      )
+    }
+
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  .blog-back {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 32px;
+  }
+
+  .blog-back:hover {
+    color: var(--blue);
+  }
+
+  .post-header time {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .post-header h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    margin: 12px 0 16px;
+  }
+
+  .post-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+  }
+
+  .post-cover {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin: 32px 0;
+  }
+
+  .post-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    color: var(--text-gray);
+    line-height: 1.8;
+    margin-top: 32px;
+  }
+
+  .post-body :global(p + p) {
+    margin-top: 1em;
+  }
+
+  .post-body :global(h2),
+  .post-body :global(h3) {
+    font-family: 'Oswald', sans-serif;
+    color: var(--navy);
+    text-transform: uppercase;
+    margin: 1.6em 0 0.6em;
+  }
+
+  .post-body :global(a) {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    margin: 1em 0 1em 1.4em;
+  }
+
+  .post-body :global(strong) {
+    color: var(--navy);
+  }
+
+  @media (max-width: 768px) {
+    .post-page {
+      padding: 32px 20px 60px;
+    }
+
+    .post-header h1 {
+      font-size: 1.85rem;
+    }
+  }
+</style>

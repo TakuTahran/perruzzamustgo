@@ -126,7 +126,7 @@ a {
       rgba(13, 27, 53, 0.10) 70%,
       rgba(13, 27, 53, 0.02) 100%
     ),
-    url('images/hero-bg.webp') center/cover no-repeat;
+    url('/images/hero-bg.webp') center/cover no-repeat;
   min-height: calc(100vh - 72px);
   display: flex;
   align-items: center;
@@ -821,7 +821,7 @@ a {
     padding: 20px 20px 10px;
     min-height: 90vh;
     align-items: flex-end;
-    background: url('images/hero-bg.webp') 75% center/cover no-repeat;
+    background: url('/images/hero-bg.webp') 75% center/cover no-repeat;
   }
 
   .hero-content {
